@@ -1,28 +1,27 @@
 (ns Fallback
   (:require ["react" :as react]))
 
-(defn makeFallback [error]
-  (fn []
-    #jsx [:div {:style {:display "flex"
-                        :flexDirection "column"
+(defn FallbackComponent [props]
+  (let [error (.-error props)]
+    #jsx [:div {:className "error-message flex-column"
+                :style {:display "flex"
                         :alignItems "center"
                         :justifyContent "center"
                         :height "100%"
                         :width "100%"
-                        :padding "2rem"
-                        :color "#FF3A33"
-                        :backgroundColor "#121212"
-                        :fontFamily "monospace"
-                        :textAlign "center"}}
+                        :fontFamily "monospace"}}
           [:h2 "USE.GPU Error"]
           [:p "There was an error initializing the GPU context:"]
           [:pre {:style {:maxWidth "100%"
-                          :overflow "auto"
-                          :padding "1rem"
-                          :backgroundColor "#222"
-                          :borderRadius "4px"
-                          :margin "1rem 0"}}
+                         :overflow "auto"
+                         :padding "1rem"
+                         :backgroundColor "rgba(0,0,0,0.3)"
+                         :borderRadius "4px"
+                         :margin "1rem 0"}}
            (str error)]
-          [:p "Please check that your browser supports WebGPU and that it is enabled."]]))
+          [:p "Please check that your browser supports WebGPU and that it is enabled."]
+          [:button {:className "control-button"
+                    :onClick #(js/window.location.reload)}
+           "Reload Page"]]))
 
-(def ^:export makeFallback makeFallback)
+(def ^:export FallbackComponent FallbackComponent)

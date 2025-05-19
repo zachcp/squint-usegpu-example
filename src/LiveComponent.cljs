@@ -1,13 +1,16 @@
 (ns LiveComponent
-  (:require ["@use-gpu/live" :refer [LC]]
-            ["@use-gpu/webgpu" :refer [WebGPU]]
-            ["@use-gpu/workbench" :refer [DebugProvider FontLoader PanControls FlatCamera Pass ImageTexture]]
-            ["@use-gpu/layout" :refer [UI Layout Flex Block Inline Text]]
-            ["@use-gpu/inspect" :refer [UseInspect]]
-            ["@use-gpu/inspect-gpu" :refer [inspectGPU]]
-            ;; ["./wgsl/test.wgsl" :refer [wgslFunction]]
-            ))
-
+  (:require
+   ["@use-gpu/react" :refer [HTML LiveCanvas]]
+   ["@use-gpu/webgpu" :refer [WebGPU]]
+   ["@use-gpu/workbench" :refer [DebugProvider FontLoader PanControls FlatCamera Pass ImageTexture]]
+   ["@use-gpu/layout" :refer [UI Layout Flex Block Inline Text]]
+   ["@use-gpu/inspect" :refer [UseInspect]]
+   ["@use-gpu/inspect-gpu" :refer [inspectGPU]]
+             ;; ["@use-gpu/live" :refer [LC]]
+          ;; ["@use-gpu/core" :refer [TextureSource]]
+          ;; ["react" :as react]
+          ;; ["./wgsl/test.wgsl" :refer [wgslFunction]]
+   ))
 (def FONTS [{:family "Lato" :weight "black" :style "normal" :src "/Lato-Black.ttf"}])
 
 (defn Camera [props]
@@ -18,9 +21,22 @@
 
 (set! (.-displayName Camera) "Camera")
 
-;; This is a Live component that takes a canvas element
+;; React component that uses LiveCanvas to integrate USE.GPU
+(defn  App []
+  (js/console.log "in the App")
+  #jsx [LiveCanvas
+        {:fallback (fn [error]  #jsx [FallbackComponent {:error error}])
+         :width "100%"
+         :height "100%"}
+        (fn [canvas]
+          #jsx [Component {:canvas canvas}])])
+
+(set! (.-displayName App) "App")
+
+;; This is a Live component that takes a canvas element - matches the example from the docs
 (defn LiveComponent [props]
   (let [canvas (.-canvas props)]
+    (js/console.log "in the LiveComponent")
     #jsx [UseInspect {:provider DebugProvider :extensions [inspectGPU]}
           [WebGPU {:canvas canvas}
            [FontLoader {:fonts FONTS}
@@ -48,4 +64,5 @@
 
 (set! (.-displayName LiveComponent) "LiveComponent")
 
-(def ^:export Component LiveComponent)
+;; Export as a LC (Live Component) type as shown in the example docs
+(def ^:export App Component LiveComponent)
