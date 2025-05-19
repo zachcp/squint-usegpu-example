@@ -19,7 +19,6 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
     "@eslint/js": "^9.9.0",
     "@types/node": "^18.0.5",
     "@types/react": "^18.3.3",
@@ -30,6 +29,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
@@ -44,6 +44,7 @@
     "@use-gpu/layout": "^0.14.0",
     "@use-gpu/live": "^0.14.0",
     "@use-gpu/parse": "^0.14.0",
+    "@use-gpu/plot": "^0.14.0",
     "@use-gpu/react": "^0.14.0",
     "@use-gpu/shader": "^0.14.0",
     "@use-gpu/traits": "^0.14.0",

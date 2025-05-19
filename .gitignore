@@ -1,0 +1,6 @@
+node_modules
+
+.lsp
+.clj-kondo
+public/dist
+public/js
