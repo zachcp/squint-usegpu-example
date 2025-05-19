@@ -1,7 +1,7 @@
 (ns App
   (:require
-   ["@use-gpu/react" :refer [HTML LiveCanvas]]
-   ["@use-gpu/plot" :refer [Plot, Cartesian, Point, Line, Transform]]
+   ["@use-gpu/react" :refer [LiveCanvas]]
+   ["@use-gpu/plot" :refer [Plot, Point, Line, Transform]]
    ["@use-gpu/webgpu" :refer [AutoCanvas, WebGPU]]
    ["@use-gpu/workbench" :refer [DebugProvider FontLoader PanControls FlatCamera Pass ImageTexture]]
    ["@use-gpu/layout" :refer [UI Layout Flex Block Inline Text]]
@@ -32,7 +32,6 @@
 (defn LiveComponent [props]
   (let [canvas (.-canvas props)]
     (js/console.log "in the LiveComponent")
-    (js/console.log canvas)
     #jsx [UseInspect {:provider DebugProvider :extensions [inspectGPU]}
           [WebGPU
            [AutoCanvas {:canvas canvas}
@@ -40,15 +39,10 @@
              [Camera
               [Pass
                [Plot
-                [Transform {:position [100 100]}
-                 [Point
-                  {:position [50 50]
-                   :size 200
-                   :color "#ffffff"}]]
+                [Transform {:position [100 100]} [Point {:position [50 50] :size 200 :color "#ffffff"}]]
                 [Point
                  {:positions [[50 100] [50 130] [50 160] [50 190] [50 220]]
-                  :size 10
-                  :color "#3090ff"}]]
+                  :size 10 :color "#3090ff"}]]
                [UI
                 [Layout
                  [Flex {:width "100%"  :height "100%" :align "center"}
@@ -61,12 +55,9 @@
                     (fn [texture]
                       (js/console.log "in the texture callback, texture:", texture)
                       #jsx [Flex {:align "center" :width "100%" :height 150}
-                            [Block {:fill "#3090ff"
-                                    :width 150
-                                    :height 150
-                                    :margin 20
-                                    :texture texture
-                                    :image {:fit "scale"}}]])]]]]]]]]]]]))
+                            [Block
+                             {:fill "#3090ff" :width 150 :height 150 :margin 20
+                              :texture texture :image {:fit "scale"}}]])]]]]]]]]]]]))
 
 (set! (.-displayName LiveComponent) "LiveComponent")
 
